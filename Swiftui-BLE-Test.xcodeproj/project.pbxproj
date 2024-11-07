@@ -11,6 +11,8 @@
 		4E3373B42CDD6D3F00835882 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3373B32CDD6D3F00835882 /* ContentView.swift */; };
 		4E3373B62CDD6D4000835882 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E3373B52CDD6D4000835882 /* Assets.xcassets */; };
 		4E3373B92CDD6D4000835882 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E3373B82CDD6D4000835882 /* Preview Assets.xcassets */; };
+		4E3373C02CDD70AA00835882 /* Peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3373BF2CDD70AA00835882 /* Peripheral.swift */; };
+		4E3373C52CDD713000835882 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3373C42CDD713000835882 /* BLEManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,9 @@
 		4E3373B32CDD6D3F00835882 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4E3373B52CDD6D4000835882 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E3373B82CDD6D4000835882 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4E3373BF2CDD70AA00835882 /* Peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peripheral.swift; sourceTree = "<group>"; };
+		4E3373C42CDD713000835882 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		4E3373C62CDD777B00835882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +56,11 @@
 		4E3373B02CDD6D3F00835882 /* Swiftui-BLE-Test */ = {
 			isa = PBXGroup;
 			children = (
+				4E3373C62CDD777B00835882 /* Info.plist */,
+				4E3373C12CDD70E300835882 /* Models */,
+				4E3373C22CDD70EA00835882 /* ViewModel */,
 				4E3373B12CDD6D3F00835882 /* Swiftui_BLE_TestApp.swift */,
-				4E3373B32CDD6D3F00835882 /* ContentView.swift */,
+				4E3373C32CDD70FD00835882 /* Views */,
 				4E3373B52CDD6D4000835882 /* Assets.xcassets */,
 				4E3373B72CDD6D4000835882 /* Preview Content */,
 			);
@@ -65,6 +73,30 @@
 				4E3373B82CDD6D4000835882 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4E3373C12CDD70E300835882 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4E3373BF2CDD70AA00835882 /* Peripheral.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4E3373C22CDD70EA00835882 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4E3373C42CDD713000835882 /* BLEManager.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4E3373C32CDD70FD00835882 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4E3373B32CDD6D3F00835882 /* ContentView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +170,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E3373B42CDD6D3F00835882 /* ContentView.swift in Sources */,
+				4E3373C52CDD713000835882 /* BLEManager.swift in Sources */,
+				4E3373C02CDD70AA00835882 /* Peripheral.swift in Sources */,
 				4E3373B22CDD6D3F00835882 /* Swiftui_BLE_TestApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +309,8 @@
 				DEVELOPMENT_TEAM = J566499KXW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Swiftui-BLE-Test/Info.plist";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses bluetooth.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -304,6 +340,8 @@
 				DEVELOPMENT_TEAM = J566499KXW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Swiftui-BLE-Test/Info.plist";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses bluetooth.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
