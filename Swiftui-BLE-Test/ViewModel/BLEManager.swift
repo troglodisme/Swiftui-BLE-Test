@@ -7,6 +7,8 @@ import Foundation
 import SwiftUI
 import CoreBluetooth
 
+
+
 // BLEManager class responsible for managing Bluetooth Low Energy (BLE) connections
 class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     @Published var isScanning = false // Property to track if scanning is in progress
@@ -17,10 +19,23 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     @Published var connectedPeripheralUUID: UUID? // UUID of the currently connected peripheral
     private var connectedPeripheral: CBPeripheral? // Reference to the currently connected peripheral
     
+    // Add this property to store the LED characteristic
+      private var ledCharacteristic: CBCharacteristic? // Reference to the LED characteristic
+
+    
+    //Service UUIDs
+    let ledServiceUUID = CBUUID(string: "19B10010-E8F2-537E-4F6C-D104768A1214")
+    
+    //Characteristics UUIDs
+    let ledCharacteristicUUID = CBUUID(string: "19B10011-E8F2-537E-4F6C-D104768A1214")
+    let buttonCharacteristicUUID = CBUUID(string: "19B10012-E8F2-537E-4F6C-D104768A1214")
+
+    
     override init() {
         super.init()
         myCentral = CBCentralManager(delegate: self, queue: nil) // Initialize the central manager with self as the delegate
     }
+
     
     // Called when the Bluetooth state updates (e.g., powered on or off)
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -63,6 +78,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     func startScanning() {
         print("Start Scanning") // Log the start of scanning
         isScanning = true
+//        myCentral.scanForPeripherals(withServices: [ledServiceUUID], options: nil) // Only scan for the Arduino's service
+
         myCentral.scanForPeripherals(withServices: nil, options: nil) // Start scanning for any peripheral
     }
     
@@ -85,6 +102,14 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         connectedPeripheral = cbPeripheral // Store a reference to the peripheral
         cbPeripheral.delegate = self // Set self as the delegate for the peripheral
         myCentral.connect(cbPeripheral, options: nil) // Attempt to connect to the peripheral
+    }
+    
+    func disconnect() {
+        if let connectedPeripheral = connectedPeripheral {
+            myCentral.cancelPeripheralConnection(connectedPeripheral) // Disconnect from the peripheral
+            connectedPeripheralUUID = nil // Reset the connected UUID
+            self.connectedPeripheral = nil // Clear the connected peripheral reference
+        }
     }
     
     // Called when a peripheral is successfully connected
@@ -113,21 +138,45 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     
     // Called when services are discovered on a peripheral
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if let services = peripheral.services { // Check if services are available
-            for service in services { // Iterate through the discovered services
-                print("Discovered service: \(service.uuid)") // Log the service UUID
-                peripheral.discoverCharacteristics(nil, for: service) // Discover characteristics for each service
+        if let services = peripheral.services {
+            for service in services {
+                if service.uuid == ledServiceUUID {
+                    print("Found LED Service")
+                    peripheral.discoverCharacteristics([ledCharacteristicUUID, buttonCharacteristicUUID], for: service)
+                }
             }
         }
     }
 
-    // Called when characteristics are discovered for a service
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if let characteristics = service.characteristics { // Check if characteristics are available
-            for characteristic in characteristics { // Iterate through the discovered characteristics
-                print("Discovered characteristic: \(characteristic.uuid)") // Log the characteristic UUID
-                // Additional code to interact with characteristics can be added here
-            }
-        }
-    }
+          if let characteristics = service.characteristics {
+              for characteristic in characteristics {
+                  if characteristic.uuid == ledCharacteristicUUID {
+                      print("Found LED Characteristic")
+                      self.ledCharacteristic = characteristic // Save the LED characteristic for writing
+                  } else if characteristic.uuid == buttonCharacteristicUUID {
+                      print("Found Button Characteristic")
+                      peripheral.setNotifyValue(true, for: characteristic) // Enable notifications for button changes
+                  }
+              }
+          }
+      }
+    
+    // Add toggleLED function to write to the LED characteristic, can be made more general for boolean write
+       func toggleLED(on: Bool) {
+           guard let ledCharacteristic = ledCharacteristic else {
+               print("LED Characteristic not found")
+               return
+           }
+           
+           let value: UInt8 = on ? 1 : 0 // 1 to turn on, 0 to turn off
+           let data = Data([value])
+           connectedPeripheral?.writeValue(data, for: ledCharacteristic, type: .withResponse)
+       }
+    
+    
+    
+    
+
+
 }
