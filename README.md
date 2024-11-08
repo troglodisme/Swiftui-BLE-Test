@@ -17,12 +17,16 @@
 # To Do
 
 - [x] 1. Scan for peripherals
-- [ ] 2. Select and connect to a specific peripheral
-- [ ] 3. Discover services
-- [ ] 4. Discover characteristics
-- [ ] 4. Read/write values
-- [ ] 5. Subscribe for nofitication
-- [ ] 6. Disconnect
+- [x] 2. Select and connect to a specific peripheral
+- [x] 3. Discover services
+- [x] 4. Discover characteristics
+- [ ] 5. Display characteristics
+- [x] 6. Write boolean value
+- [ ] 7. Read values 
+- [ ] 8. Subscribe for nofitication
+- [x] 9. Disconnect
+
+- [ ] 10. Generalise boolean value (currently fixed to led characteristic)
       
 
 # Resources to explore
