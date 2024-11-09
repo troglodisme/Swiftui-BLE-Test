@@ -1,3 +1,14 @@
+# SwiftUI BLE Test
+
+Learning how to interact with BLE peripherals using SwiftUI and CoreBluetooth
+
+Tested with Adafruit feather esp32 and Arduino BLE led example sketch
+
+https://github.com/arduino-libraries/ArduinoBLE/blob/master/examples/Peripheral/ButtonLED/ButtonLED.ino
+
+
+
+
 # How BLE works
 
  1. Scan for peripherals and gather advertisement data: The central device (your iOS app) scans for peripherals that are broadcasting advertisement packets (max 31 bytes, only read). It can filter based on data like device name, service UUIDs, RSSI, and manufacturer data to decide whether to connect. 
